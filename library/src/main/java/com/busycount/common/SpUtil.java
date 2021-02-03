@@ -3,7 +3,7 @@ package com.busycount.common;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Build;
-import android.support.annotation.RequiresApi;
+import androidx.annotation.RequiresApi;
 
 import static com.busycount.common.AppContext.getAppContext;
 
