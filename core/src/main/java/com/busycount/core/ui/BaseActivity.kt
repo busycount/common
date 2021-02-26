@@ -16,10 +16,13 @@ import com.busycount.core.utils.UiFitUtil
  **/
 abstract class BaseActivity : AppCompatActivity() {
 
-    private val customStyle = BaseStyle()
+    val customStyle = BaseStyle()
+
+    lateinit var rootViewGroup: ViewGroup;
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        rootViewGroup = window.decorView.findViewById(R.id.content)
         initCustomStyle()
         initView()
         initTitleBar()
@@ -49,22 +52,12 @@ abstract class BaseActivity : AppCompatActivity() {
             return
         }
         val titleBar = setCustomTitleBar()
-        val rootView = window.decorView.findViewById<ViewGroup>(R.id.content)
-        if (customStyle.editMode) {
-            titleBar.titleView.setPadding(0, 0, 0, 0)
-            titleBar.titleHeight = titleBar.getDefaultTitleHeight()
-        } else {
-            UiFitUtil.fitTop(titleBar.titleView)
-            titleBar.titleHeight = titleBar.getDefaultTitleHeight() + UiFitUtil.getStatusBarHeight(this)
-        }
 
-        rootView.addView(titleBar.titleView, 0)
-        if (rootView.childCount > 1) {
-            val childAt = rootView.getChildAt(1) as ViewGroup
+        if (rootViewGroup.childCount > 1) {
+            val childAt = rootViewGroup.getChildAt(1)
             val layoutParams = FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
             childAt.post {
-                val titleHeight = titleBar.titleView.height
-                titleBar.titleHeight = titleHeight
+                val titleHeight = titleBar.titleRootView.height
                 layoutParams.topMargin = titleHeight
                 childAt.layoutParams = layoutParams
             }
