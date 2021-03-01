@@ -1,13 +1,37 @@
-package com.busycount.common.sample;
+package com.busycount.common.sample
 
-import androidx.appcompat.app.AppCompatActivity;
-import android.os.Bundle;
+import com.busycount.common.sample.databinding.ActivityMainBinding
+import com.busycount.core.ui.BaseActivity
+import com.busycount.core.ui.BaseLoadingView
+import com.busycount.core.ui.BaseTitleBar
 
-public class MainActivity extends AppCompatActivity {
+class MainActivity : BaseActivity() {
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+    private lateinit var binding: ActivityMainBinding
+
+    override fun initView() {
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+    }
+
+    override fun setCustomTitleBar(): BaseTitleBar {
+        return TestTitle()
+    }
+
+    override fun setCustomLoadingView(): BaseLoadingView {
+        return TestLoading(this)
+    }
+
+    override fun initLogic() {
+        titleBar.setTitle("Main Activity")
+
+        binding.btnShowLoading.setOnClickListener {
+            loadingView.showLoading(true)
+
+
+            it.postDelayed({
+                loadingView.showLoading(false)
+            }, 3000)
+        }
     }
 }

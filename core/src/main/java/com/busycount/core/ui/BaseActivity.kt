@@ -3,11 +3,9 @@ package com.busycount.core.ui
 import android.R
 import android.os.Bundle
 import android.view.ViewGroup
-import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
 import com.busycount.core.const.BaseStyle
 import com.busycount.core.utils.QMUIStatusBarHelper
-import com.busycount.core.utils.UiFitUtil
 
 /**
  * @author : thalys_ch
@@ -16,9 +14,17 @@ import com.busycount.core.utils.UiFitUtil
  **/
 abstract class BaseActivity : AppCompatActivity() {
 
+    lateinit var rootViewGroup: ViewGroup
+
     val customStyle = BaseStyle()
 
-    lateinit var rootViewGroup: ViewGroup;
+    val titleBar: BaseTitleBar by lazy {
+        setCustomTitleBar()
+    }
+
+    val loadingView: BaseLoadingView by lazy {
+        setCustomLoadingView()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,7 +34,6 @@ abstract class BaseActivity : AppCompatActivity() {
         initTitleBar()
         initLogic()
     }
-
 
     private fun initCustomStyle() {
         setCustomStyle(customStyle)
@@ -51,20 +56,13 @@ abstract class BaseActivity : AppCompatActivity() {
         if (!customStyle.needTitleBar) {
             return
         }
-        val titleBar = setCustomTitleBar()
-
-        if (rootViewGroup.childCount > 1) {
-            val childAt = rootViewGroup.getChildAt(1)
-            val layoutParams = FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
-            childAt.post {
-                val titleHeight = titleBar.titleRootView.height
-                layoutParams.topMargin = titleHeight
-                childAt.layoutParams = layoutParams
-            }
-        }
+        titleBar.initTitle(this)
     }
 
     abstract fun setCustomTitleBar(): BaseTitleBar
+
+
+    abstract fun setCustomLoadingView(): BaseLoadingView
 
 
     abstract fun initLogic()
