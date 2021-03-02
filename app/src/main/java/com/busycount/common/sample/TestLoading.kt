@@ -31,4 +31,8 @@ class TestLoading(baseActivity: BaseActivity) : BaseLoadingView(baseActivity) {
             retryListener?.invoke()
         }
     }
+
+    override fun onError(code: Int, msg: String) {
+
+    }
 }

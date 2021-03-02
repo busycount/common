@@ -78,4 +78,7 @@ abstract class BaseLoadingView(private val baseActivity: BaseActivity) {
 
     var retryListener: (() -> Unit)? = null
 
+
+    abstract fun onError(code: Int, msg: String)
+
 }

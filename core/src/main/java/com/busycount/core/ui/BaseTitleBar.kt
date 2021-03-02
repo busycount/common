@@ -15,13 +15,14 @@ import com.busycount.core.utils.UiFitUtil
 abstract class BaseTitleBar {
 
     var titleRootView: View? = null
+        protected set
 
     var titleHeight = 0
         private set
 
-    abstract fun getDefaultTitleBarHeight(): Int
+    protected abstract fun getDefaultTitleBarHeight(): Int
 
-    abstract fun createTitleView(layoutInflater: LayoutInflater, rootView: ViewGroup): View
+    protected abstract fun createTitleView(layoutInflater: LayoutInflater, rootView: ViewGroup): View
 
     internal fun initTitle(baseActivity: BaseActivity) {
         titleRootView = createTitleView(baseActivity.layoutInflater, baseActivity.rootViewGroup)
@@ -49,7 +50,7 @@ abstract class BaseTitleBar {
         initLogic(baseActivity)
     }
 
-    abstract fun initLogic(baseActivity: BaseActivity)
+    protected abstract fun initLogic(baseActivity: BaseActivity)
 
     fun setTitle(title: String) {
         if (titleRootView != null) {
