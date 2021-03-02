@@ -4,25 +4,24 @@ import android.R
 import android.os.Bundle
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
-import com.busycount.core.const.BaseStyle
 import com.busycount.core.utils.QMUIStatusBarHelper
 
 /**
- * @author : thalys_ch
+ * @author : BusyCount
  * Date : 2021/02/05
  * Describe :BaseActivity
  **/
-abstract class BaseActivity : AppCompatActivity() {
+abstract class BasicActivity : AppCompatActivity() {
 
     lateinit var rootViewGroup: ViewGroup
 
-    val customStyle = BaseStyle()
+    val customStyle = BasicStyle()
 
-    val titleBar: BaseTitleBar by lazy {
+    val titleBar: BasicTitleBar by lazy {
         setCustomTitleBar()
     }
 
-    val loadingView: BaseLoadingView by lazy {
+    val loadingView: BasicLoadingView by lazy {
         setCustomLoadingView()
     }
 
@@ -32,6 +31,7 @@ abstract class BaseActivity : AppCompatActivity() {
         initCustomStyle()
         initView()
         initTitleBar()
+        initObserver()
         initLogic()
     }
 
@@ -48,7 +48,7 @@ abstract class BaseActivity : AppCompatActivity() {
         }
     }
 
-    open fun setCustomStyle(style: BaseStyle) {
+    open fun setCustomStyle(style: BasicStyle) {
     }
 
     abstract fun initView()
@@ -60,11 +60,20 @@ abstract class BaseActivity : AppCompatActivity() {
         titleBar.initTitle(this)
     }
 
-    abstract fun setCustomTitleBar(): BaseTitleBar
+    abstract fun setCustomTitleBar(): BasicTitleBar
 
+    abstract fun setCustomLoadingView(): BasicLoadingView
 
-    abstract fun setCustomLoadingView(): BaseLoadingView
-
+    abstract fun initObserver()
 
     abstract fun initLogic()
+
+    fun showLoading(isShow: Boolean) {
+        loadingView.showLoading(isShow)
+    }
+
+    fun onError(code: Int, msg: String) {
+        loadingView.showError(true)
+        loadingView.onError(code, msg)
+    }
 }

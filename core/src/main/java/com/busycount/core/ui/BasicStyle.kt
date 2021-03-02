@@ -1,11 +1,11 @@
-package com.busycount.core.const
+package com.busycount.core.ui
 
 /**
- * @author : thalys_ch
+ * @author : BusyCount
  * Date : 2021/02/24
  * Describe :基础样式
  **/
-class BaseStyle {
+class BasicStyle {
     /**
      * 状态栏
      */

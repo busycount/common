@@ -4,15 +4,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.busycount.common.sample.databinding.MainLoadFailureBinding
-import com.busycount.core.ui.BaseActivity
-import com.busycount.core.ui.BaseLoadingView
+import com.busycount.core.ui.BasicActivity
+import com.busycount.core.ui.BasicLoadingView
 
 /**
- * @author : thalys_ch
+ * @author : BusyCount
  * Date : 2021/03/01
  * Describe :TestLoading
  **/
-class TestLoading(baseActivity: BaseActivity) : BaseLoadingView(baseActivity) {
+class TestLoading(basicActivity: BasicActivity) : BasicLoadingView(basicActivity) {
 
     private lateinit var errorBinding: MainLoadFailureBinding
 

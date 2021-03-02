@@ -1,11 +1,14 @@
 package com.busycount.common.sample
 
+import androidx.activity.viewModels
 import com.busycount.common.sample.databinding.ActivityMainBinding
-import com.busycount.core.ui.BaseActivity
-import com.busycount.core.ui.BaseLoadingView
-import com.busycount.core.ui.BaseTitleBar
+import com.busycount.core.ui.BasicActivity
+import com.busycount.core.ui.BasicLoadingView
+import com.busycount.core.ui.BasicTitleBar
 
-class MainActivity : BaseActivity() {
+class MainActivity : BasicActivity() {
+
+    private val myVm: MyVm by viewModels()
 
     private lateinit var binding: ActivityMainBinding
 
@@ -17,15 +20,26 @@ class MainActivity : BaseActivity() {
         }
     }
 
-    override fun setCustomTitleBar(): BaseTitleBar {
+    override fun setCustomTitleBar(): BasicTitleBar {
         return TestTitle()
     }
 
-    override fun setCustomLoadingView(): BaseLoadingView {
+    override fun setCustomLoadingView(): BasicLoadingView {
         return TestLoading(this)
     }
 
+    override fun initObserver() {
+    }
+
     override fun initLogic() {
+        myVm.status.observe(this) {
+            binding.tv.text = if (it) {
+                "True"
+            } else {
+                "false"
+            }
+        }
+
         titleBar.setTitle("Main Activity")
 
         binding.btnShowLoading.setOnClickListener {
@@ -36,8 +50,10 @@ class MainActivity : BaseActivity() {
 
     private fun mockLoading() {
         loadingView.showLoading(true)
+        myVm.status.value = true
         binding.btnShowLoading.postDelayed({
             loadingView.showError(true)
+            myVm.status.value = false
         }, 3000)
     }
 }

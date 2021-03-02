@@ -8,11 +8,11 @@ import android.widget.FrameLayout
 import com.busycount.core.utils.UiFitUtil
 
 /**
- * @author : thalys_ch
+ * @author : BusyCount
  * Date : 2021/02/24
  * Describe :BaseTitleBar
  **/
-abstract class BaseTitleBar {
+abstract class BasicTitleBar {
 
     var titleRootView: View? = null
         protected set
@@ -24,21 +24,21 @@ abstract class BaseTitleBar {
 
     protected abstract fun createTitleView(layoutInflater: LayoutInflater, rootView: ViewGroup): View
 
-    internal fun initTitle(baseActivity: BaseActivity) {
-        titleRootView = createTitleView(baseActivity.layoutInflater, baseActivity.rootViewGroup)
+    internal fun initTitle(basicActivity: BasicActivity) {
+        titleRootView = createTitleView(basicActivity.layoutInflater, basicActivity.rootViewGroup)
 
         titleHeight = getDefaultTitleBarHeight()
-        if (baseActivity.customStyle.editMode) {
+        if (basicActivity.customStyle.editMode) {
             titleRootView?.setPadding(0, 0, 0, 0)
         } else {
             UiFitUtil.fitTop(titleRootView)
-            titleHeight = getDefaultTitleBarHeight() + UiFitUtil.getStatusBarHeight(baseActivity)
+            titleHeight = getDefaultTitleBarHeight() + UiFitUtil.getStatusBarHeight(basicActivity)
         }
 
-        baseActivity.rootViewGroup.addView(titleRootView, 0)
+        basicActivity.rootViewGroup.addView(titleRootView, 0)
 
-        if (baseActivity.rootViewGroup.childCount > 1) {
-            val childAt = baseActivity.rootViewGroup.getChildAt(1)
+        if (basicActivity.rootViewGroup.childCount > 1) {
+            val childAt = basicActivity.rootViewGroup.getChildAt(1)
             val layoutParams = FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
             childAt.post {
                 titleHeight = titleRootView!!.height
@@ -47,10 +47,10 @@ abstract class BaseTitleBar {
             }
         }
 
-        initLogic(baseActivity)
+        initLogic(basicActivity)
     }
 
-    protected abstract fun initLogic(baseActivity: BaseActivity)
+    protected abstract fun initLogic(basicActivity: BasicActivity)
 
     fun setTitle(title: String) {
         if (titleRootView != null) {

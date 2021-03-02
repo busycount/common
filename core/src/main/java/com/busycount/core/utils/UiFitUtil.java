@@ -8,7 +8,7 @@ import android.view.ViewTreeObserver;
 import android.widget.TextView;
 
 /**
- * @author : thalys_ch
+ * @author : BusyCount
  * Date : 2020/07/29
  * Describe :UiFitUtil
  **/

@@ -6,11 +6,11 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 
 /**
- * @author : thalys_ch
+ * @author : BusyCount
  * Date : 2021/03/01
  * Describe :BaseLoadingView
  **/
-abstract class BaseLoadingView(private val baseActivity: BaseActivity) {
+abstract class BasicLoadingView(private val basicActivity: BasicActivity) {
 
     private var loadingView: View? = null
 
@@ -40,11 +40,11 @@ abstract class BaseLoadingView(private val baseActivity: BaseActivity) {
 
     private fun showLoadingView() {
         if (loadingView == null) {
-            loadingView = createLoadingView(baseActivity.layoutInflater, baseActivity.rootViewGroup)
+            loadingView = createLoadingView(basicActivity.layoutInflater, basicActivity.rootViewGroup)
         }
 
         if (loadingView?.parent == null) {
-            baseActivity.rootViewGroup.addView(loadingView)
+            basicActivity.rootViewGroup.addView(loadingView)
         }
         loadingView?.visibility = View.VISIBLE
     }
@@ -57,16 +57,16 @@ abstract class BaseLoadingView(private val baseActivity: BaseActivity) {
 
     private fun showErrorView() {
         if (errorView == null) {
-            errorView = createErrorView(baseActivity.layoutInflater, baseActivity.rootViewGroup)
+            errorView = createErrorView(basicActivity.layoutInflater, basicActivity.rootViewGroup)
         }
 
         if (errorView?.parent == null) {
-            if (baseActivity.customStyle.needTitleBar) {
+            if (basicActivity.customStyle.needTitleBar) {
                 val layoutParams = FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT)
-                layoutParams.topMargin = baseActivity.titleBar.titleHeight
+                layoutParams.topMargin = basicActivity.titleBar.titleHeight
                 errorView?.layoutParams = layoutParams
             }
-            baseActivity.rootViewGroup.addView(errorView)
+            basicActivity.rootViewGroup.addView(errorView)
         }
         errorView?.visibility = View.VISIBLE
     }
