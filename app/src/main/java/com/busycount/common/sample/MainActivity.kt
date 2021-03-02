@@ -12,6 +12,9 @@ class MainActivity : BaseActivity() {
     override fun initView() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        loadingView.retryListener = {
+            mockLoading()
+        }
     }
 
     override fun setCustomTitleBar(): BaseTitleBar {
@@ -26,12 +29,15 @@ class MainActivity : BaseActivity() {
         titleBar.setTitle("Main Activity")
 
         binding.btnShowLoading.setOnClickListener {
-            loadingView.showLoading(true)
-
-
-            it.postDelayed({
-                loadingView.showLoading(false)
-            }, 3000)
+            mockLoading()
         }
+    }
+
+
+    private fun mockLoading() {
+        loadingView.showLoading(true)
+        binding.btnShowLoading.postDelayed({
+            loadingView.showError(true)
+        }, 3000)
     }
 }

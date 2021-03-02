@@ -19,7 +19,7 @@ public class UiFitUtil {
         return (int) (dpValue * scale + 0.5f);
     }
 
-
+    //todo remove context
     public static int getStatusBarHeight(Context context) {
         Resources resources = context.getResources();
         int resourceId = resources.getIdentifier("status_bar_height", "dimen", "android");

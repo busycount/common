@@ -16,15 +16,22 @@ abstract class BaseTitleBar {
 
     var titleRootView: View? = null
 
+    var titleHeight = 0
+        private set
+
+    abstract fun getDefaultTitleBarHeight(): Int
+
     abstract fun createTitleView(layoutInflater: LayoutInflater, rootView: ViewGroup): View
 
     internal fun initTitle(baseActivity: BaseActivity) {
         titleRootView = createTitleView(baseActivity.layoutInflater, baseActivity.rootViewGroup)
 
+        titleHeight = getDefaultTitleBarHeight()
         if (baseActivity.customStyle.editMode) {
             titleRootView?.setPadding(0, 0, 0, 0)
         } else {
             UiFitUtil.fitTop(titleRootView)
+            titleHeight = getDefaultTitleBarHeight() + UiFitUtil.getStatusBarHeight(baseActivity)
         }
 
         baseActivity.rootViewGroup.addView(titleRootView, 0)
@@ -33,7 +40,7 @@ abstract class BaseTitleBar {
             val childAt = baseActivity.rootViewGroup.getChildAt(1)
             val layoutParams = FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
             childAt.post {
-                val titleHeight = titleRootView!!.height
+                titleHeight = titleRootView!!.height
                 layoutParams.topMargin = titleHeight
                 childAt.layoutParams = layoutParams
             }
@@ -50,6 +57,10 @@ abstract class BaseTitleBar {
         } else {
             Log.w("BaseTitleBar", "BaseActivity-style-titleBar should be true")
         }
+    }
+
+    open fun setDivider(isShow: Boolean) {
+
     }
 
     protected abstract fun setTitleInner(title: String)

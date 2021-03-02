@@ -6,15 +6,20 @@ import android.view.ViewGroup
 import com.busycount.common.sample.databinding.MainTitlebarBinding
 import com.busycount.core.ui.BaseActivity
 import com.busycount.core.ui.BaseTitleBar
+import com.busycount.core.utils.UiFitUtil
 
 /**
  * @author : thalys_ch
  * Date : 2021/02/26
- * Describe :
+ * Describe :TestTitle
  **/
 class TestTitle : BaseTitleBar() {
 
     private lateinit var binding: MainTitlebarBinding
+
+    override fun getDefaultTitleBarHeight(): Int {
+        return UiFitUtil.dp2px(49f)
+    }
 
     override fun createTitleView(layoutInflater: LayoutInflater, rootView: ViewGroup): View {
         binding = MainTitlebarBinding.inflate(layoutInflater, rootView, false)

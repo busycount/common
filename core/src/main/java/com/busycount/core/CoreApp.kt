@@ -5,7 +5,7 @@ import android.app.Application
 /**
  * @author : thalys_ch
  * Date : 2021/02/05
- * Describe :
+ * Describe :CoreApp
  **/
 class CoreApp : Application() {
 }

@@ -38,6 +38,7 @@ abstract class BaseActivity : AppCompatActivity() {
     private fun initCustomStyle() {
         setCustomStyle(customStyle)
         if (!customStyle.editMode) {
+            //编辑模式不使用透明状态栏
             QMUIStatusBarHelper.translucent(this)
         }
         if (customStyle.lightStatusBar) {
