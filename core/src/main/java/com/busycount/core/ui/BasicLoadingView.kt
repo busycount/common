@@ -10,7 +10,7 @@ import android.widget.FrameLayout
  * Date : 2021/03/01
  * Describe :BaseLoadingView
  **/
-abstract class BasicLoadingView(private val basicActivity: BasicActivity) {
+abstract class BasicLoadingView(protected val basicActivity: BasicActivity) {
 
     private var loadingView: View? = null
 
