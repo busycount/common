@@ -29,7 +29,7 @@ abstract class BasicActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         rootViewGroup = window.decorView.findViewById(R.id.content)
         initCustomStyle()
-        initView()
+        initCreateView()
         initTitleBar()
         initObserver()
         initLogic()
@@ -51,7 +51,7 @@ abstract class BasicActivity : AppCompatActivity() {
     open fun setCustomStyle(style: BasicStyle) {
     }
 
-    abstract fun initView()
+    abstract fun initCreateView()
 
     private fun initTitleBar() {
         if (!customStyle.needTitleBar) {
@@ -64,7 +64,8 @@ abstract class BasicActivity : AppCompatActivity() {
 
     abstract fun setCustomLoadingView(): BasicLoadingView
 
-    abstract fun initObserver()
+    open fun initObserver() {
+    }
 
     abstract fun initLogic()
 
@@ -72,8 +73,12 @@ abstract class BasicActivity : AppCompatActivity() {
         loadingView.showLoading(isShow)
     }
 
-    fun onError(code: Int, msg: String) {
+    fun showError(code: Int, msg: String) {
         loadingView.showError(true)
         loadingView.onError(code, msg)
+    }
+
+    fun hideError() {
+        loadingView.showError(false)
     }
 }

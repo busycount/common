@@ -12,11 +12,11 @@ class MainActivity : BasicActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
-    override fun initView() {
+    override fun initCreateView() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        loadingView.retryListener = {
-            mockLoading()
+        loadingView.onRetryListener = {
+            mockLoading(false)
         }
     }
 
@@ -40,20 +40,25 @@ class MainActivity : BasicActivity() {
             }
         }
 
-        titleBar.setTitle("Main Activity")
+        titleBar.setTitleText("Main Activity")
 
         binding.btnShowLoading.setOnClickListener {
-            mockLoading()
+            mockLoading(true)
         }
+
+        supportFragmentManager.beginTransaction().add(R.id.container, MyFragment()).commit()
     }
 
 
-    private fun mockLoading() {
+    private fun mockLoading(showError: Boolean) {
         loadingView.showLoading(true)
         myVm.status.value = true
         binding.btnShowLoading.postDelayed({
-            loadingView.showError(true)
+            loadingView.showError(showError)
+            if (!showError) {
+                loadingView.showLoading(false)
+            }
             myVm.status.value = false
-        }, 3000)
+        }, 1500)
     }
 }

@@ -55,13 +55,11 @@ abstract class BasicTitleBar {
     protected fun hasInit(): Boolean {
         val isInit = titleRootView != null
         if (!isInit) {
-            Log.w("BaseTitleBar", "BaseActivity-style-titleBar should be true")
+            Log.w("Basic-Core", "BasicActivity-style-titleBar should be true")
         }
         return isInit
     }
 
-    abstract fun setTitle(title: String)
-
-    open fun addView(view: View) {}
+    abstract fun setTitleText(title: String?)
 
 }

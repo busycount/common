@@ -32,7 +32,7 @@ class TestTitle : BasicTitleBar() {
         }
     }
 
-    override fun setTitle(title: String) {
+    override fun setTitleText(title: String?) {
         if (hasInit()) {
             binding.title.text = title
         }

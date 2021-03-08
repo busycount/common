@@ -13,8 +13,17 @@ import androidx.fragment.app.Fragment
  **/
 abstract class BasicFragment : Fragment() {
 
+    protected var rootContainer: ViewGroup? = null
+
+    protected var errorView: BasicErrorView? = null
+
+    open fun selfDisplayError(): Boolean {
+        return false
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return initView(inflater, container, savedInstanceState)
+        rootContainer = container
+        return initCreateView(inflater, container, savedInstanceState)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -23,9 +32,9 @@ abstract class BasicFragment : Fragment() {
         initLogic()
     }
 
-    abstract fun initView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View
+    abstract fun initCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View
 
-    abstract fun initObserver()
+    open fun initObserver() {}
 
     abstract fun initLogic()
 
@@ -35,10 +44,46 @@ abstract class BasicFragment : Fragment() {
         }
     }
 
-    fun onError(code: Int, msg: String) {
-        if (activity is BasicActivity) {
-            (activity as BasicActivity).onError(code, msg)
+    open fun initErrorViewCreate(): BasicErrorView? {
+        return null
+    }
+
+    open fun initErrorViewLogic(errorView: BasicErrorView) {
+
+    }
+
+    fun showError(code: Int, msg: String) {
+        if (selfDisplayError()) {
+            if (rootContainer == null) {
+                return
+            }
+            if (errorView == null) {
+                errorView = initErrorViewCreate()
+                errorView?.let {
+                    initErrorViewLogic(it)
+                }
+            }
+            errorView?.addToParent()
+            errorView?.showError()
+        } else {
+            if (activity is BasicActivity) {
+                (activity as BasicActivity).showError(code, msg)
+            }
         }
     }
 
+    fun hidError() {
+        if (selfDisplayError()) {
+            errorView?.hideError()
+        } else {
+            if (activity is BasicActivity) {
+                (activity as BasicActivity).hideError()
+            }
+        }
+    }
+
+
+    protected fun postDelay() {
+
+    }
 }

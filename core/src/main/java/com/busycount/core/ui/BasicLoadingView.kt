@@ -14,11 +14,11 @@ abstract class BasicLoadingView(protected val basicActivity: BasicActivity) {
 
     private var loadingView: View? = null
 
-    private var errorView: View? = null
+    private var errorView: BasicErrorView? = null
 
     abstract fun createLoadingView(layoutInflater: LayoutInflater, rootView: ViewGroup): View
 
-    abstract fun createErrorView(layoutInflater: LayoutInflater, rootView: ViewGroup): View
+    abstract fun createErrorView(rootView: ViewGroup): BasicErrorView
 
     fun showLoading(isShow: Boolean) {
         if (isShow) {
@@ -57,26 +57,29 @@ abstract class BasicLoadingView(protected val basicActivity: BasicActivity) {
 
     private fun showErrorView() {
         if (errorView == null) {
-            errorView = createErrorView(basicActivity.layoutInflater, basicActivity.rootViewGroup)
+            errorView = createErrorView(basicActivity.rootViewGroup)
+        }
+        if (errorView?.isNotAdded() == true) {
+            val layoutParams = FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT)
+            layoutParams.topMargin = basicActivity.titleBar.titleHeight
+            errorView?.addToParent(layoutParams)
+            errorView?.onRetryListener = onRetryListener
         }
 
-        if (errorView?.parent == null) {
-            if (basicActivity.customStyle.needTitleBar) {
-                val layoutParams = FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT)
-                layoutParams.topMargin = basicActivity.titleBar.titleHeight
-                errorView?.layoutParams = layoutParams
-            }
-            basicActivity.rootViewGroup.addView(errorView)
-        }
-        errorView?.visibility = View.VISIBLE
+        errorView?.showError()
     }
+
 
     private fun hideErrorView() {
-        errorView?.visibility = View.GONE
+        errorView?.hideError()
     }
 
 
-    var retryListener: (() -> Unit)? = null
+    var onRetryListener: (() -> Unit)? = null
+        set(value) {
+            errorView?.onRetryListener = value
+            field = value
+        }
 
 
     abstract fun onError(code: Int, msg: String)
