@@ -22,7 +22,4 @@ class TestLoading(basicActivity: BasicActivity) : BasicLoadingView(basicActivity
         return TestErrorView(rootView)
     }
 
-    override fun onError(code: Int, msg: String) {
-
-    }
 }

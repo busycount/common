@@ -82,7 +82,6 @@ abstract class BasicFragment : Fragment() {
         }
     }
 
-
     protected fun postDelay() {
 
     }

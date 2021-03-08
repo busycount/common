@@ -82,6 +82,8 @@ abstract class BasicLoadingView(protected val basicActivity: BasicActivity) {
         }
 
 
-    abstract fun onError(code: Int, msg: String)
+    fun onError(code: Int, msg: String) {
+        errorView?.onError(code, msg)
+    }
 
 }

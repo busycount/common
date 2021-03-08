@@ -50,4 +50,7 @@ abstract class BasicErrorView(private val container: ViewGroup) {
     }
 
     var onRetryListener: (() -> Unit)? = null
+
+
+    abstract fun onError(code: Int, msg: String)
 }

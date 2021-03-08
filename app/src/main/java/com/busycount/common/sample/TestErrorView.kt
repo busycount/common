@@ -26,4 +26,8 @@ class TestErrorView(container: ViewGroup) : BasicErrorView(container) {
         }
     }
 
+    override fun onError(code: Int, msg: String) {
+
+    }
+
 }
