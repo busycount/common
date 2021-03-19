@@ -13,16 +13,11 @@ import androidx.fragment.app.Fragment
  **/
 abstract class BasicFragment : Fragment() {
 
-    protected var rootContainer: ViewGroup? = null
+    protected var errorContainer: ViewGroup? = null
 
-    protected var errorView: BasicErrorView? = null
-
-    open fun selfDisplayError(): Boolean {
-        return false
-    }
+    private var errorView: BasicErrorView? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        rootContainer = container
         return initCreateView(inflater, container, savedInstanceState)
     }
 
@@ -52,9 +47,13 @@ abstract class BasicFragment : Fragment() {
 
     }
 
+    private fun selfDisplayError(): Boolean {
+        return errorContainer != null
+    }
+
     fun showError(code: Int, msg: String) {
         if (selfDisplayError()) {
-            if (rootContainer == null) {
+            if (errorContainer == null) {
                 return
             }
             if (errorView == null) {
@@ -65,6 +64,7 @@ abstract class BasicFragment : Fragment() {
             }
             errorView?.addToParent()
             errorView?.showError()
+            errorView?.onError(code, msg)
         } else {
             if (activity is BasicActivity) {
                 (activity as BasicActivity).showError(code, msg)
@@ -82,7 +82,4 @@ abstract class BasicFragment : Fragment() {
         }
     }
 
-    protected fun postDelay() {
-
-    }
 }

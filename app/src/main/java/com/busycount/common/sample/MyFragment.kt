@@ -18,12 +18,9 @@ class MyFragment : BasicFragment() {
 
     private lateinit var binding: FragmentABinding
 
-    override fun selfDisplayError(): Boolean {
-        return true
-    }
-
     override fun initCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentABinding.inflate(layoutInflater, container, false)
+        errorContainer = binding.secContainer
         return binding.root
     }
 
@@ -38,8 +35,8 @@ class MyFragment : BasicFragment() {
     }
 
     override fun initErrorViewCreate(): BasicErrorView? {
-        return if (rootContainer != null) {
-            TestErrorView(rootContainer!!)
+        return if (errorContainer != null) {
+            TestErrorView(errorContainer!!)
         } else {
             super.initErrorViewCreate()
         }
