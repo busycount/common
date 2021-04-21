@@ -1,10 +1,11 @@
-package com.busycount.core.ui
+package com.busycount.core.ui.title
 
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import com.busycount.core.ui.BasicActivity
 import com.busycount.core.utils.UiFitUtil
 
 /**

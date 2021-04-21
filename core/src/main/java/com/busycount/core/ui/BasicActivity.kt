@@ -4,6 +4,11 @@ import android.R
 import android.os.Bundle
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import com.busycount.core.ui.error.BasicErrorView
+import com.busycount.core.ui.error.OnErrorRetryListener
+import com.busycount.core.ui.loading.BasicLoadingDialog
+import com.busycount.core.ui.title.BasicStyle
+import com.busycount.core.ui.title.BasicTitleBar
 import com.busycount.core.utils.QMUIStatusBarHelper
 
 /**
@@ -11,7 +16,7 @@ import com.busycount.core.utils.QMUIStatusBarHelper
  * Date : 2021/02/05
  * Describe :BaseActivity
  **/
-abstract class BasicActivity : AppCompatActivity() {
+abstract class BasicActivity : AppCompatActivity(), OnErrorRetryListener {
 
     lateinit var rootViewGroup: ViewGroup
 
@@ -21,8 +26,12 @@ abstract class BasicActivity : AppCompatActivity() {
         setCustomTitleBar()
     }
 
-    val loadingView: BasicLoadingView by lazy {
-        setCustomLoadingView()
+    private val basicLoadingDialog: BasicLoadingDialog by lazy {
+        BasicLoadingDialog()
+    }
+
+    private val basicErrorView: BasicErrorView by lazy {
+        BasicErrorView(rootViewGroup)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -62,7 +71,6 @@ abstract class BasicActivity : AppCompatActivity() {
 
     abstract fun setCustomTitleBar(): BasicTitleBar
 
-    abstract fun setCustomLoadingView(): BasicLoadingView
 
     open fun initObserver() {
     }
@@ -70,15 +78,21 @@ abstract class BasicActivity : AppCompatActivity() {
     abstract fun initLogic()
 
     fun showLoading(isShow: Boolean) {
-        loadingView.showLoading(isShow)
+        if (isShow) {
+            basicLoadingDialog.show(supportFragmentManager)
+        } else {
+            basicLoadingDialog.dismiss()
+        }
     }
 
     fun showError(code: Int, msg: String) {
-        loadingView.showError(true)
-        loadingView.onError(code, msg)
+        basicErrorView.attach(this, this)
+        BasicGlobalStyle.errorHandler.onError(basicErrorView.errorView, code, msg, this)
+        basicErrorView.showError()
     }
 
     fun hideError() {
-        loadingView.showError(false)
+        basicErrorView.hideError()
     }
+
 }

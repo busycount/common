@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.busycount.common.sample.databinding.FragmentABinding
-import com.busycount.core.ui.BasicErrorView
 import com.busycount.core.ui.BasicFragment
 
 /**
@@ -20,13 +19,12 @@ class MyFragment : BasicFragment() {
 
     override fun initCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentABinding.inflate(layoutInflater, container, false)
-        errorContainer = binding.secContainer
         return binding.root
     }
 
     override fun initLogic() {
         binding.showError.setOnClickListener {
-            showError(1, "1")
+            showError(1, "2")
         }
         binding.showLoading.setOnClickListener {
             showLoading(true)
@@ -34,20 +32,15 @@ class MyFragment : BasicFragment() {
         }
     }
 
-    override fun initErrorViewCreate(): BasicErrorView? {
-        return if (errorContainer != null) {
-            TestErrorView(errorContainer!!)
-        } else {
-            super.initErrorViewCreate()
-        }
+    override fun initSelfError(): ViewGroup {
+        return binding.secContainer
     }
 
-    override fun initErrorViewLogic(errorView: BasicErrorView) {
-        super.initErrorViewLogic(errorView)
-        errorView.onRetryListener = {
-            Toast.makeText(context, "abc", Toast.LENGTH_SHORT).show()
-            hidError()
-        }
+
+    override fun onErrorRetry() {
+        super.onErrorRetry()
+        Toast.makeText(context, "abc", Toast.LENGTH_SHORT).show()
+        hidError()
     }
 
 }

@@ -1,12 +1,18 @@
 package com.busycount.common.sample
 
-import android.content.Intent
 import androidx.activity.viewModels
 import com.busycount.common.sample.databinding.ActivityMainBinding
 import com.busycount.core.ui.BasicActivity
+import com.busycount.core.ui.title.BasicStyle
 import com.busycount.core.ui.title.BasicTitleBar
+import com.busycount.core.utils.UiFitUtil
 
-class MainActivity : BasicActivity() {
+/**
+ * @author : thalys_ch
+ * Date : 2021/04/21
+ * Describe :
+ **/
+class SecondActivity : BasicActivity() {
 
     private val myVm: MyVm by viewModels()
 
@@ -15,6 +21,12 @@ class MainActivity : BasicActivity() {
     override fun initCreateView() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        UiFitUtil.fitTop(binding.rootContainer)
+    }
+
+    override fun setCustomStyle(style: BasicStyle) {
+        super.setCustomStyle(style)
+        style.needTitleBar = false
     }
 
     override fun setCustomTitleBar(): BasicTitleBar {
@@ -33,14 +45,10 @@ class MainActivity : BasicActivity() {
             }
         }
 
-        titleBar.setTitleText("Main Activity")
+        titleBar.setTitleText("Sec Activity")
 
         binding.btnShowLoading.setOnClickListener {
             mockLoading(true)
-        }
-
-        binding.btnNext.setOnClickListener {
-            startActivity(Intent(this, SecondActivity::class.java))
         }
 
         supportFragmentManager.beginTransaction().add(R.id.container, MyFragment()).commit()

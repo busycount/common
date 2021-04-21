@@ -5,7 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.busycount.common.sample.databinding.MainTitlebarBinding
 import com.busycount.core.ui.BasicActivity
-import com.busycount.core.ui.BasicTitleBar
+import com.busycount.core.ui.title.BasicTitleBar
 import com.busycount.core.utils.UiFitUtil
 
 /**

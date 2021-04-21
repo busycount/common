@@ -39,6 +39,14 @@ public class UiFitUtil {
         viewGroup.setPadding(left, top + getStatusBarHeight(viewGroup.getContext()), right, bottom);
     }
 
+
+    public static void fitTopOnce(View viewGroup) {
+        int left = viewGroup.getPaddingLeft();
+        int right = viewGroup.getPaddingRight();
+        int bottom = viewGroup.getPaddingBottom();
+        viewGroup.setPadding(left, getStatusBarHeight(viewGroup.getContext()), right, bottom);
+    }
+
     /**
      * 使顶部view下沉，避免被状态栏遮挡
      *

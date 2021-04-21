@@ -1,4 +1,4 @@
-package com.busycount.core.ui
+package com.busycount.core.ui.title
 
 /**
  * @author : BusyCount
@@ -20,4 +20,5 @@ class BasicStyle {
      * 标题栏
      */
     var needTitleBar = true
+
 }
