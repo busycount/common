@@ -56,6 +56,9 @@ class BasicLoadingDialog : DialogFragment() {
 
 
     override fun dismiss() {
+        if (!isAdded || isDetached) {
+            return
+        }
         val interval = System.currentTimeMillis() - showStartTime - BasicGlobalStyle.minLoadingTime
         if (interval >= 0) {
             super.dismiss()
