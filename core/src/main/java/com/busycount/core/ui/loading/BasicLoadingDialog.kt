@@ -9,7 +9,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
 import com.busycount.core.ui.BasicGlobalStyle
 
 
@@ -19,6 +18,8 @@ import com.busycount.core.ui.BasicGlobalStyle
  * Describe :加载
  **/
 class BasicLoadingDialog : DialogFragment() {
+
+    private val dialogTag: String = System.currentTimeMillis().toString()
 
     private var showStartTime: Long = 0L
 
@@ -42,12 +43,15 @@ class BasicLoadingDialog : DialogFragment() {
         if (!isVisible) {
             showStartTime = System.currentTimeMillis()
         }
-        val ft: FragmentTransaction = manager.beginTransaction()
-        if (this.isAdded) {
-            ft.remove(this).commit()
+        if (manager.isDestroyed) return
+        try {
+            //在每个add事务前增加一个remove事务，防止连续的add
+            manager.beginTransaction().remove(this).commit()
+            show(manager, dialogTag)
+        } catch (e: Exception) {
+            //同一实例使用不同的tag会异常，这里捕获一下
+            e.printStackTrace()
         }
-        ft.add(this, System.currentTimeMillis().toString())
-        ft.commitAllowingStateLoss()
     }
 
 
