@@ -19,6 +19,7 @@ class MyFragment : BasicFragment() {
 
     override fun initCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentABinding.inflate(layoutInflater, container, false)
+        errorContainer = binding.secContainer
         return binding.root
     }
 
@@ -30,10 +31,6 @@ class MyFragment : BasicFragment() {
             showLoading(true)
             binding.showLoading.postDelayed({ showLoading(false) }, 1000)
         }
-    }
-
-    override fun initSelfError(): ViewGroup {
-        return binding.secContainer
     }
 
 

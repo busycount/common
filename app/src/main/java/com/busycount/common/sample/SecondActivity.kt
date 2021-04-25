@@ -3,6 +3,7 @@ package com.busycount.common.sample
 import androidx.activity.viewModels
 import com.busycount.common.sample.databinding.ActivityMainBinding
 import com.busycount.core.ui.BasicActivity
+import com.busycount.core.ui.error.BasicErrorHandler
 import com.busycount.core.ui.title.BasicStyle
 import com.busycount.core.ui.title.BasicTitleBar
 import com.busycount.core.utils.UiFitUtil
@@ -54,6 +55,14 @@ class SecondActivity : BasicActivity() {
         supportFragmentManager.beginTransaction().add(R.id.container, MyFragment()).commit()
     }
 
+
+    override fun getErrorHandler(): BasicErrorHandler {
+        return object : BasicErrorHandler() {
+            override fun getLayoutId(): Int {
+                return R.layout.main_load_failure2
+            }
+        }
+    }
 
     private fun mockLoading(showError: Boolean) {
         showLoading(true)

@@ -20,12 +20,17 @@ class MyApp : Application() {
         super.onCreate()
         BasicGlobalStyle.errorViewId = R.layout.main_load_failure
         BasicGlobalStyle.errorHandler = object : BasicErrorHandler() {
+
+            override fun getLayoutId(): Int {
+                return R.layout.main_load_failure
+            }
+
             override fun onError(errorView: View, code: Int, msg: String, basicActivity: BasicActivity?) {
                 super.onError(errorView, code, msg, basicActivity)
                 val textView = errorView.findViewById<TextView>(R.id.tv_error)
                 textView?.text = msg
 
-                val needTitle = basicActivity?.customStyle?.needTitleBar ?: false
+                val needTitle = basicActivity?.customStyle?.needTitleBar ?: true
                 errorView.findViewById<Group>(R.id.title_group).visibility = if (needTitle) {
                     View.GONE
                 } else {

@@ -4,6 +4,7 @@ import android.R
 import android.os.Bundle
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import com.busycount.core.ui.error.BasicErrorHandler
 import com.busycount.core.ui.error.BasicErrorView
 import com.busycount.core.ui.error.OnErrorRetryListener
 import com.busycount.core.ui.loading.BasicLoadingDialog
@@ -31,7 +32,7 @@ abstract class BasicActivity : AppCompatActivity(), OnErrorRetryListener {
     }
 
     private val basicErrorView: BasicErrorView by lazy {
-        BasicErrorView(rootViewGroup)
+        BasicErrorView(this)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -71,6 +72,9 @@ abstract class BasicActivity : AppCompatActivity(), OnErrorRetryListener {
 
     abstract fun setCustomTitleBar(): BasicTitleBar
 
+    open fun getErrorHandler(): BasicErrorHandler {
+        return BasicGlobalStyle.errorHandler
+    }
 
     open fun initObserver() {
     }
@@ -86,12 +90,11 @@ abstract class BasicActivity : AppCompatActivity(), OnErrorRetryListener {
     }
 
     fun showError(code: Int, msg: String) {
-        basicErrorView.attach(this, this)
-        BasicGlobalStyle.errorHandler.onError(basicErrorView.errorView, code, msg, this)
-        basicErrorView.showError()
+        basicErrorView.showError(code, msg)
     }
 
     fun hideError() {
+        showLoading(false)
         basicErrorView.hideError()
     }
 

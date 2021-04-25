@@ -29,6 +29,7 @@ class BasicLoadingDialog : DialogFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        isCancelable = false
         configWindow()
     }
 

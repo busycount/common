@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.busycount.core.ui.error.BasicErrorHandler
 import com.busycount.core.ui.error.BasicErrorView
 import com.busycount.core.ui.error.OnErrorRetryListener
 
@@ -15,7 +16,7 @@ import com.busycount.core.ui.error.OnErrorRetryListener
  **/
 abstract class BasicFragment : Fragment(), OnErrorRetryListener {
 
-    private var errorContainer: ViewGroup? = null
+    var errorContainer: ViewGroup? = null
 
     private var basicErrorView: BasicErrorView? = null
 
@@ -25,7 +26,6 @@ abstract class BasicFragment : Fragment(), OnErrorRetryListener {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        errorContainer = initSelfError()
         initObserver()
         initLogic()
     }
@@ -36,8 +36,8 @@ abstract class BasicFragment : Fragment(), OnErrorRetryListener {
 
     abstract fun initLogic()
 
-    open fun initSelfError(): ViewGroup? {
-        return null
+    open fun getErrorHandler(): BasicErrorHandler {
+        return BasicGlobalStyle.errorHandler
     }
 
     fun showLoading(isShow: Boolean) {
@@ -49,13 +49,9 @@ abstract class BasicFragment : Fragment(), OnErrorRetryListener {
     fun showError(code: Int, msg: String) {
         if (errorContainer != null) {
             if (basicErrorView == null) {
-                basicErrorView = BasicErrorView(errorContainer!!)
+                basicErrorView = BasicErrorView(this)
             }
-            basicErrorView?.let {
-                it.attach(onErrorRetryListener = this)
-                BasicGlobalStyle.errorHandler.onError(it.errorView, code, msg)
-                it.showError()
-            }
+            basicErrorView?.showError(code, msg)
         } else {
             if (activity is BasicActivity) {
                 (activity as BasicActivity).showError(code, msg)
@@ -65,6 +61,7 @@ abstract class BasicFragment : Fragment(), OnErrorRetryListener {
 
     fun hidError() {
         if (errorContainer != null) {
+            showLoading(false)
             basicErrorView?.hideError()
         } else {
             if (activity is BasicActivity) {
