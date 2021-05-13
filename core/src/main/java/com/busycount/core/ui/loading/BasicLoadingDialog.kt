@@ -47,7 +47,7 @@ class BasicLoadingDialog : DialogFragment() {
         if (manager.isDestroyed) return
         try {
             //在每个add事务前增加一个remove事务，防止连续的add
-            manager.beginTransaction().remove(this).commit()
+            manager.beginTransaction().remove(this).commitAllowingStateLoss()
             show(manager, dialogTag)
         } catch (e: Exception) {
             //同一实例使用不同的tag会异常，这里捕获一下

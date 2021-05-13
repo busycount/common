@@ -18,7 +18,6 @@ class MyApp : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        BasicGlobalStyle.errorViewId = R.layout.main_load_failure
         BasicGlobalStyle.errorHandler = object : BasicErrorHandler() {
 
             override fun getLayoutId(): Int {

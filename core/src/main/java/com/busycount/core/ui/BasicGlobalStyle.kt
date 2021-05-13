@@ -16,8 +16,5 @@ object BasicGlobalStyle {
 
     var minLoadingTime: Long = 500L
 
-    @LayoutRes
-    var errorViewId: Int = R.layout.basic_layout_error
-
     var errorHandler: BasicErrorHandler = BasicErrorHandler()
 }
