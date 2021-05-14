@@ -62,7 +62,7 @@ class BasicLoadingDialog : DialogFragment() {
         }
         val interval = System.currentTimeMillis() - showStartTime - BasicGlobalStyle.minLoadingTime
         if (interval >= 0) {
-            super.dismiss()
+            dismissAllowingStateLoss()
         } else {
             view?.postDelayed({
                 dismiss()
