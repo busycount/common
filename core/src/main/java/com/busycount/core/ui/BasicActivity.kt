@@ -1,6 +1,5 @@
 package com.busycount.core.ui
 
-import android.R
 import android.os.Bundle
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
@@ -37,7 +36,7 @@ abstract class BasicActivity : AppCompatActivity(), OnErrorRetryListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        rootViewGroup = window.decorView.findViewById(R.id.content)
+        rootViewGroup = window.decorView.findViewById(android.R.id.content)
         initCustomStyle()
         initCreateView()
         initTitleBar()
