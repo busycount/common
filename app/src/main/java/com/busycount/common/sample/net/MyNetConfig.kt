@@ -1,6 +1,7 @@
 package com.busycount.common.sample.net
 
 import com.busycount.network.NetworkConfig
+import retrofit2.Converter
 
 /**
  * @author : thalys_ch
@@ -10,10 +11,12 @@ import com.busycount.network.NetworkConfig
 class MyNetConfig : NetworkConfig {
 
     override fun getBaseUrl(): String {
-        return "https://lhisdev.thalys.net.cn/"
+        return ""
     }
 
-
+    override fun getConverterFactory(): Converter.Factory? {
+        return SecurityConvertFactory.create(false)
+    }
 
 
 }

@@ -4,10 +4,12 @@ import android.app.Application
 import android.view.View
 import android.widget.TextView
 import androidx.constraintlayout.widget.Group
+import com.busycount.common.sample.net.MyNetConfig
 import com.busycount.core.ui.BasicActivity
 import com.busycount.core.ui.BasicGlobalStyle
 import com.busycount.core.ui.error.BasicErrorHandler
 import com.busycount.core.utils.UiFitUtil
+import com.busycount.network.NetClient
 
 /**
  * @author : thalys_ch
@@ -44,5 +46,7 @@ class MyApp : Application() {
 
             }
         }
+
+        NetClient.onInit(MyNetConfig())
     }
 }

@@ -25,13 +25,20 @@ class NetClient private constructor(private val config: NetworkConfig) {
             }
             return instance!!
         }
+
+
+        fun <T> create(service: Class<T>): T {
+            return get().create(service)
+        }
     }
 
+    fun <T> create(service: Class<T>): T {
+        return retrofit.create(service)
+    }
 
     private val retrofit: Retrofit by lazy {
         initRetrofit()
     }
-
 
     private fun initRetrofit(): Retrofit {
 
